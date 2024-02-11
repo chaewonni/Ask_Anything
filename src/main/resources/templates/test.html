@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Member Auth Test</title>
+</head>
+<body>
+<h2>Register</h2>
+<form id="registerForm">
+    Email: <input type="text" id="registerEmail"><br>
+    Password: <input type="password" id="registerPassword"><br>
+    <button type="submit">Register</button>
+</form>
+
+<h2>Login</h2>
+<form id="loginForm">
+    Email: <input type="text" id="loginEmail"><br>
+    Password: <input type="password" id="loginPassword"><br>
+    <button type="submit">Login</button>
+</form>
+
+<button id="logoutButton">Logout</button>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('registerEmail').value;
+        var password = document.getElementById('registerPassword').value;
+
+        fetch('/user/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(response => response.text())
+        .then(data => alert(data));
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('loginEmail').value;
+        var password = document.getElementById('loginPassword').value;
+
+        fetch('/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(response => response.text())
+        .then(data => alert(data));
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        fetch('/user/logout', {
+            method: 'POST'
+        })
+        .then(response => response.text())
+        .then(data => alert(data));
+    });
+</script>
+</body>
+</html>
