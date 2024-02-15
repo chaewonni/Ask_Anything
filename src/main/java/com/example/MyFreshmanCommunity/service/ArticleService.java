@@ -5,6 +5,7 @@ import com.example.MyFreshmanCommunity.dto.ArticleResponseDto;
 import com.example.MyFreshmanCommunity.entity.Article;
 import com.example.MyFreshmanCommunity.entity.Major;
 import com.example.MyFreshmanCommunity.entity.Member;
+import com.example.MyFreshmanCommunity.exception.MemberNotFoundException;
 import com.example.MyFreshmanCommunity.exception.NotFoundException;
 import com.example.MyFreshmanCommunity.exception.NotPermissionException;
 import com.example.MyFreshmanCommunity.repository.ArticleRepository;
@@ -50,6 +51,7 @@ public class ArticleService {
         Member member = (Member) session.getAttribute("member");
         Major major = majorRepository.findById(majorId)
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 전공입니다"));
+        if(member == null) throw new MemberNotFoundException("로그인 하지 않은 상태에서 글을 쓸 수 없습니다.");
         Article article = Article.createArticle(articleDto, member, major);
         articleRepository.save(article);
     }
