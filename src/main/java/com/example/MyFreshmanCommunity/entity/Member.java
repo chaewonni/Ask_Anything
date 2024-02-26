@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter @Setter
@@ -34,6 +36,7 @@ public class Member {
     //학과 정보
     @ManyToOne
     @JoinColumn(name = "major_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Major major;
 
 

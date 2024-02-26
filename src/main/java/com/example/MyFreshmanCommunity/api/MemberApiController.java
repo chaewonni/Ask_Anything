@@ -2,6 +2,7 @@ package com.example.MyFreshmanCommunity.api;
 
 import com.example.MyFreshmanCommunity.dto.LoginDto;
 import com.example.MyFreshmanCommunity.dto.LoginResponseDto;
+import com.example.MyFreshmanCommunity.dto.MyBookmarkDto;
 import com.example.MyFreshmanCommunity.dto.SignupDto;
 import com.example.MyFreshmanCommunity.entity.Member;
 import com.example.MyFreshmanCommunity.service.MemberService;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,5 +69,13 @@ public class MemberApiController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+    }
+
+    //나의 북마크
+    @GetMapping("/user/bookmark")
+    public ResponseEntity<List<MyBookmarkDto>> myBookmark(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        List<MyBookmarkDto> bookmarks = memberService.myBookmark(session);
+        return ResponseEntity.status(HttpStatus.OK).body(bookmarks);
     }
 }

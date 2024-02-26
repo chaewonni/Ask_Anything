@@ -1,6 +1,6 @@
 package com.example.MyFreshmanCommunity.dto;
 
-import com.example.MyFreshmanCommunity.entity.LikeComment;
+import com.example.MyFreshmanCommunity.entity.Bookmark;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeDto {
+public class BookmarkDto {
     private String message;
     private boolean status;
-    
-    public static LikeDto createLikeDto(String message, LikeComment likeComment) {
-        return new LikeDto(
+
+    public static BookmarkDto createBookmarkDto(String message, Bookmark bookmark) {
+        return new BookmarkDto(
                 message,
-                likeComment.isStatus()
+                bookmark.isStatus()
         );
     }
 }

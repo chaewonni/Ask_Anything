@@ -1,13 +1,15 @@
 package com.example.MyFreshmanCommunity.service;
 
 import com.example.MyFreshmanCommunity.dto.LoginDto;
+import com.example.MyFreshmanCommunity.dto.MyBookmarkDto;
 import com.example.MyFreshmanCommunity.dto.SignupDto;
 import com.example.MyFreshmanCommunity.entity.Major;
 import com.example.MyFreshmanCommunity.entity.Member;
 import com.example.MyFreshmanCommunity.exception.DuplicateMemberException;
 import com.example.MyFreshmanCommunity.exception.IncorrectPasswordException;
-import com.example.MyFreshmanCommunity.exception.MemberNotFoundException;
 import com.example.MyFreshmanCommunity.exception.NotFoundException;
+import com.example.MyFreshmanCommunity.repository.ArticleRepository;
+import com.example.MyFreshmanCommunity.repository.BookmarkRepository;
 import com.example.MyFreshmanCommunity.repository.MajorRepository;
 import com.example.MyFreshmanCommunity.repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MajorRepository majorRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ArticleRepository articleRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Transactional
     //회원가입
@@ -101,4 +108,10 @@ public class MemberService {
         });
     }
 
+    public List<MyBookmarkDto> myBookmark(HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        return bookmarkRepository.findAllByMemberOrderByCreateDateDesc(member).stream()
+                .map(bookmark -> MyBookmarkDto.createMyBookmarkDto(bookmark.getArticle()))
+                .collect(Collectors.toList());
+    }
 }

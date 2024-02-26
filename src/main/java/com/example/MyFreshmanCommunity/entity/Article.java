@@ -4,6 +4,8 @@ import com.example.MyFreshmanCommunity.dto.ArticleDto;
 import com.example.MyFreshmanCommunity.repository.MajorRepository;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -27,10 +29,14 @@ public class Article {
     private String content;
 
     @Column
+    private int bookmarkCount;
+
+    @Column
     private LocalDateTime createDate;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Member member;
 
     @ManyToOne
@@ -42,6 +48,7 @@ public class Article {
                 null,
                 articleDto.getTitle(),
                 articleDto.getContent(),
+                0,
                 LocalDateTime.now(),
                 member,
                 major

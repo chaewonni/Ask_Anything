@@ -61,8 +61,8 @@ public class ArticleService {
         Article target = articleRepository.findByArticleId(majorId, articleId);
         Member member = (Member) session.getAttribute("member");
 
-//        log.info("Target Member ID: {}, Name: {}, Email:{}, Password:{}, studentId:{}, major:{}", target.getMember().getId(), target.getMember().getMemberName(), target.getMember().getEmail(), target.getMember().getPassword(), target.getMember().getStudentId(), target.getMember().getMajor().getId());
-//        log.info("Session Member ID: {}, Name: {}, Email:{}, Password:{}, studentId:{}, major:{}", member.getId(), member.getMemberName(), member.getEmail(), member.getPassword(), member.getStudentId(), member.getMajor().getId());
+        log.info("Target Member ID: {}, Name: {}, Email:{}, Password:{}, studentId:{}, major:{}", target.getMember().getId(), target.getMember().getMemberName(), target.getMember().getEmail(), target.getMember().getPassword(), target.getMember().getStudentId(), target.getMember().getMajor().getId());
+        log.info("Session Member ID: {}, Name: {}, Email:{}, Password:{}, studentId:{}, major:{}", member.getId(), member.getMemberName(), member.getEmail(), member.getPassword(), member.getStudentId(), member.getMajor().getId());
 
         if(target == null) {
             throw new IllegalArgumentException("대상 게시글이 없습니다.");

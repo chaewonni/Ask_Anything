@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +31,7 @@ public class Comment {
     @Column
     private int likesCount;
 
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member member;

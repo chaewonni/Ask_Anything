@@ -10,7 +10,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     //특정 전공의 모든 게시글 조회
-    @Query(value = "SELECT * FROM article WHERE major_id = :majorId",
+    @Query(value = "SELECT * FROM article WHERE major_id = :majorId ORDER BY create_date DESC",
             nativeQuery = true)
     List<Article> findAllByMajorId(Long majorId);
 
