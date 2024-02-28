@@ -65,7 +65,7 @@ public class ArticleService {
         log.info("Session Member ID: {}, Name: {}, Email:{}, Password:{}, studentId:{}, major:{}", member.getId(), member.getMemberName(), member.getEmail(), member.getPassword(), member.getStudentId(), member.getMajor().getId());
 
         if(target == null) {
-            throw new IllegalArgumentException("대상 게시글이 없습니다.");
+            throw new NotFoundException("대상 게시글이 없습니다.");
         }
         if(!target.getMember().getId().equals(member.getId())) {
             throw new NotPermissionException("다른 사람의 게시물을 수정할 수 없습니다.");
