@@ -76,7 +76,6 @@ public class MemberService {
         if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword()))
             throw new IncorrectPasswordException("비밀번호가 맞지 않습니다.");
 
-        member.clearPassword();
         return member;
     }
 
@@ -93,7 +92,6 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
         memberRepository.delete(member);
-//        SignupDto.createMemberDto(member);
     }
 
     //회원 전체 조회
