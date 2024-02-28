@@ -41,6 +41,7 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "major_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Major major;
 
     public static Article createArticle(ArticleDto articleDto, Member member, Major major){
