@@ -17,6 +17,7 @@ public class BookmarkApiController {
 
     private final BookmarkService bookmarkService;
 
+    //게시글 북마크
     @PostMapping("/article/{articleId}/bookmark")
     public ResponseEntity<BookmarkDto> addBookmark(@PathVariable Long articleId, HttpServletRequest request) {
         HttpSession session = request.getSession();

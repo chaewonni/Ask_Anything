@@ -4,6 +4,7 @@ import com.example.MyFreshmanCommunity.dto.LikeDto;
 import com.example.MyFreshmanCommunity.entity.Comment;
 import com.example.MyFreshmanCommunity.entity.LikeComment;
 import com.example.MyFreshmanCommunity.entity.Member;
+import com.example.MyFreshmanCommunity.exception.MemberNotFoundException;
 import com.example.MyFreshmanCommunity.exception.NotFoundException;
 import com.example.MyFreshmanCommunity.repository.CommentRepository;
 import com.example.MyFreshmanCommunity.repository.LikeCommentRepository;
@@ -25,6 +26,8 @@ public class LikeCommentService {
         Member member = (Member) session.getAttribute("member");
         Comment comment = commentRepository.findById(commentId).
                 orElseThrow(() -> new NotFoundException("대상 댓글이 없습니다."));
+
+        if(member == null) throw new MemberNotFoundException("로그인하지 않은 상태에선 좋아요를 누를 수 없습니다.");
 
         if (likeCommentRepository.findByMemberAndComment(member, comment) == null) { //좋아요가 없으면
             comment.setLikesCount(comment.getLikesCount() + 1); //1씩 증가

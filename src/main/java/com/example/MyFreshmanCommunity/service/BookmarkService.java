@@ -4,6 +4,7 @@ import com.example.MyFreshmanCommunity.dto.BookmarkDto;
 import com.example.MyFreshmanCommunity.entity.Article;
 import com.example.MyFreshmanCommunity.entity.Bookmark;
 import com.example.MyFreshmanCommunity.entity.Member;
+import com.example.MyFreshmanCommunity.exception.MemberNotFoundException;
 import com.example.MyFreshmanCommunity.exception.NotFoundException;
 import com.example.MyFreshmanCommunity.repository.ArticleRepository;
 import com.example.MyFreshmanCommunity.repository.BookmarkRepository;
@@ -26,14 +27,16 @@ public class BookmarkService {
         Article article = articleRepository.findById(articleId).
                 orElseThrow(() -> new NotFoundException("대상 게시글이 없습니다."));
 
+        if(member == null) throw new MemberNotFoundException("로그인하지 않은 상태에선 북마크를 할 수 없습니다.");
+
         if(bookmarkRepository.findByMemberAndArticle(member, article) == null) {
-//            article.setBookmarkCount(article.getBookmarkCount() + 1);
+            article.setBookmarkCount(article.getBookmarkCount() + 1);
             Bookmark bookmark = Bookmark.createBookmark(member, article);
             bookmarkRepository.save(bookmark);
             return BookmarkDto.createBookmarkDto("북마크 처리 완료", bookmark);
         }
         else {
-//            article.setBookmarkCount(article.getBookmarkCount() - 1);
+            article.setBookmarkCount(article.getBookmarkCount() - 1);
             Bookmark bookmark = bookmarkRepository.findByMemberAndArticle(member, article);
             bookmark.deleteBookmark(article); //false처리
             bookmarkRepository.deleteByMemberAndArticle(member, article);

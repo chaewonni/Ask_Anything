@@ -18,20 +18,20 @@ public class CommentResponseDto {
     private String content;
     private LocalDateTime createDate;
     private int likesCount;
-//    private Long memberId;
-//    private String studentId;
-//    private Major major;
+    private MemberInfoDto memberInfo;
     private LoginResponseDto member;
 
     public static CommentResponseDto createCommentDto(Comment comment){
+
+        MemberInfoDto memberInfo = comment.getMember() != null ?
+                MemberInfoDto.createMemberDto(comment.getMember()) : null;
+
         return new CommentResponseDto(
                 comment.getId(),
                 comment.getContent(),
                 comment.getCreateDate(),
                 comment.getLikesCount(),
-//                comment.getMember().getId(),
-//                comment.getMember().getStudentId(),
-//                comment.getMember().getMajor()
+                memberInfo,
                 LoginResponseDto.createLoginDto(comment.getMember())
         );
     }
