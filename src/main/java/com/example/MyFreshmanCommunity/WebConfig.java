@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("*")
+                .allowedOriginPatterns("*") //전체 다 받을 경우 Origin'Patterns"로 수정
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true)
